@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "siparisler";
+}
+
+<h2>siparisler</h2>
+@{
+    int sayi = 1;
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Urun Adı</th>
+            <th scope="col">Adeti</th>
+            <th scope="col">Sipariş Durumu</th>
+            <th scope="col">Sipariş Adresi</th>
+            <th scope="col">Kargo Numarası</th>
+            <th scope="col">İptal Talebi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            webticaret.Models.sqlContext db = new webticaret.Models.sqlContext();
+            foreach (var item in ViewBag.siparisler)
+            {
+                int idd = item.urun_id;
+                string urunadial = (from v in db.urunler
+                                    where v.id == idd
+                                    select v.urunadi).FirstOrDefault();
+                int ss = item.kullanicidetay_id;
+                string adresal = (from v in db.kullanicidetaylari
+                                  where v.id == ss
+                                  select v.adres).FirstOrDefault();
+                <tr>
+                    <th scope="row">@sayi</th>
+                    <td>@urunadial</td>
+                    <td>@item.adet</td>
+                    <td>@item.siparisdurumu</td>
+
+                    <td>@adresal</td>
+                    <td>(*****)</td>
+                    <td>
+                        @using (Html.BeginForm("siparisiptali", "genel", FormMethod.Post))
+                        {
+                            <input type="hidden" name="hiddenid" value="@item.id" />
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Siparişi İptal Et
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Siparişi İptal Et</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @urunadial Adlı Siparişinizi iptal etmek istediğinize emin misiniz?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeçtim</button>
+                                            <button type="submit" class="btn btn-primary">Sipariş İptal Et</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+                sayi++;
+            }
+        }
+    </tbody>
+</table>
+

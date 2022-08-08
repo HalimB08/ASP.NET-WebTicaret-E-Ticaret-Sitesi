@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+
+    <title>Webticaret - @ViewBag.Title</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            @Html.ActionLink("webticaret", "anasayfa", "genel", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        @Html.ActionLink("Anasayfa", "anasayfa", "genel", new { id = 0 }, new { @class = "nav-link active" })
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    @{
+                        if (webticaret.Controllers.genelController.yetki == "yetkili")
+                        {
+                            <div class="dropdown" style="margin-right:5em;">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @Session["takmaadi"]
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>@Html.ActionLink("Siparişler", "yetkilisiparis", "genel", new { id = 1 }, new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Ürün Ekle", "urunekle", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Ürün Güncelle", "", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Kategori Ekle", "kategoriekle", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Atl Kategori Ekle", "altkategoriekle", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Hesabım", "", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Çıkış Yap", "cik", "genel", new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </div>
+                        }
+                        else if (Session["kadiid"] != null)
+                        {
+                            <div class="dropdown" style="margin-right:5em;">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @Session["takmaadi"]
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>@Html.ActionLink("Sepetim", "sepet", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Siparişlerim", "siparisler", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Hesabım", "hesabım", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Çıkış Yap", "cik", "genel", new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown" style="margin-right:5em;">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Giriş Yapılmadı
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>@Html.ActionLink("Giriş Yap", "girisyap", "genel", new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Kayıt Ol", "kayitol", "genel", new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </div>
+                        }
+                    }
+
+
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+    @*@Url.Content("~/Content/style.css")*@
+    <script src="@Url.Content("~/Scripts/popper.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>
+</body>
+</html>

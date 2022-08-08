@@ -1,0 +1,53 @@
+﻿@model webticaret.Models.kullanicikayit
+@{
+    ViewBag.Title = "kayitol";
+}
+
+<h2>@ViewBag.kayitolmesaj</h2>
+
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-6">
+        <h1 class="text-center">Kayıt Ol</h1>
+        @using (Html.BeginForm("kayitol", "genel"))
+        {
+            
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Adınız</label>
+                    <input type="text" class="form-control" name="adi" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Soyadınız</label>
+                    <input type="text" class="form-control" name="sadi" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">eMailiniz</label>
+                    <input type="email" class="form-control" name="epost" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Kullanıcı Adınız</label>
+                    <input type="text" class="form-control" name="takmaadi" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Şifre</label>
+                    <input type="password" class="form-control" name="sif" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Tekrar Şifre</label>
+                    <input type="password" class="form-control" name="siftekrar" id="exampleInputEmail1">
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" name="kabulmu" value="evet" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Koşulları kabul ediyorum.</label>
+                </div>
+      
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        }
+    </div>
+    <div class="col">
+
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "adresduzenle";
+}
+
+<h3>@ViewBag.mesaj</h3>
+
+
+
+<div class="alert alert-warning mb-3 mt-3" role="alert">
+    Adres adına sipariş verildiyse güncellenemez ve silinemez. Lütfen yeni sipariş vermek için şimdilik yeni bir adres ekleyiniz.
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Adres Düzenle
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("adresduzenle", "genel"))
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Adres</th>
+                        <th>Posta Kodu</th>
+                        <th>Şehir</th>
+                        <th>İlçe</th>
+                        <th>Mahalle</th>
+                        <th>Tel 1</th>
+                        <th>Tel 2</th>
+                        <th>Düzenle</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sayi2 = 1;
+
+                        foreach (var initem in ViewBag.adres)
+                        {
+                            <tr>
+                                <th scope="row">@sayi2</th>
+                                <td>@initem.adres</td>
+                                <td>@initem.postakodu</td>
+                                <td>@initem.sehir</td>
+                                <td>@initem.ilce</td>
+                                <td>@initem.mahalle</td>
+                                <td>@initem.telno1</td>
+                                <td>@initem.telno2</td>
+                                <td>
+                                    @Html.ActionLink("Düzenle", "adresguncelle", "genel", new { id = initem.id }, new { @class = "nav-link active" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sil", "adressil", "genel", new { id = initem.id }, new { @class = "nav-link active" })
+                                </td>
+                            </tr>
+                            sayi2++;
+                        }
+
+
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

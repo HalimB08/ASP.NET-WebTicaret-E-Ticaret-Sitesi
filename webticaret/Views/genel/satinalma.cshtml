@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "satinalma";
+}
+
+<nav aria-label="breadcrumb mb-3 mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+        <li class="breadcrumb-item"><a href="#">Sepet</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Satın Alma</li>
+    </ol>
+</nav>
+
+<h3 style="color:red;">@ViewBag.mesaj</h3>
+
+@using (Html.BeginForm("satinalma", "genel"))
+{
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Alacağım Ürünler
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <!---->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Ürün Adı</th>
+                                <th scope="col">Ürün Fiyatı</th>
+                                <th scope="col">Adeti</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int sayi = 1;
+                                foreach (var item in ViewBag.sepet)
+                                {
+                                    int idal = item.urun_id;
+                                    webticaret.Models.sqlContext db = new webticaret.Models.sqlContext();
+                                    var urunismi = (from v in db.urunler
+                                                    where v.id == idal
+                                                    select v).ToList();
+                                    foreach (var initem in urunismi)
+                                    {
+                                        <tr>
+                                            <th scope="row">@sayi</th>
+                                            <td>@initem.urunadi</td>
+                                            <td>@initem.urunfiyat ₺</td>
+                                            <td>@item.adet</td>
+                                        </tr>
+                                    }
+                                    sayi++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <div class="card mb-3" style="width: 18rem;">
+                        <div class="card-header">
+                            Satın Alım Kısmı
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Toplam Ücret : @ViewBag.toplamfiyat
+                            </li>
+                        </ul>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Adres Bilgim
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    @{
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Adres</th>
+                                    <th>Posta Kodu</th>
+                                    <th>Şehir</th>
+                                    <th>İlçe</th>
+                                    <th>Mahalle</th>
+                                    <th>Tel 1</th>
+                                    <th>Tel 2</th>
+                                    <th>Tercih</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int sayi2 = 1;
+
+                                    foreach (var initem in ViewBag.adres)
+                                    {
+                                        <tr>
+                                            <th scope="row">@sayi2</th>
+                                            <td>@initem.adres</td>
+                                            <td>@initem.postakodu</td>
+                                            <td>@initem.sehir</td>
+                                            <td>@initem.ilce</td>
+                                            <td>@initem.mahalle</td>
+                                            <td>@initem.telno1</td>
+                                            <td>@initem.telno2</td>
+                                            <td><input type="radio" name="adressecim" value="@initem.id" checked /></td>
+                                        </tr>
+                                        sayi2++;
+                                    }
+
+
+                                }
+                            </tbody>
+                        </table>
+                        <div class="card mb-3" style="width: 18rem;">
+                            <div class="card-header">
+                                Adres Ekle
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    @Html.ActionLink("Adres Ekle", "adresekle", "genel", new { @class = "btn btn-warning" })
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Satın Alma
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" name="kabulmu" value="evet" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Mesafeli satış sözleşmesini kabul ediyorum.</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Satın Al</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "anasayfa";
+}
+
+@{
+    if (Session["kadiid"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+            <strong>Hoşgeldin!</strong> @ViewBag.adisadi
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    if (webticaret.Controllers.genelController.kayitdurum == "kayitevet")
+    {
+        <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+            <strong>Hoşgeldin!</strong> Kaydın başarılı!
+            @Html.ActionLink("Giriş Yap", "girisyap", "genel", new { @class = "btn btn-link" })
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        webticaret.Controllers.genelController.kayitdurum = "";
+    }
+}
+<br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Ürünler</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    @Html.ActionLink("Tüm Ürünler", "anasayfa", "genel", new { id = 0 }, new { @class = "nav-link active" })
+
+                </li>
+                @{
+                    foreach (var item in ViewBag.kategoriisimleri)
+                    {
+                        string itemadi = item.kategoriadi;
+                        <div class="dropdown" style="margin-left:1rem;">
+                            @Html.ActionLink(itemadi, "anasayfa", "genel", new { id = item.id }, new { @class = "btn btn-secondary dropdown-toggle", data_bs_toggle = "dropdown", aria_expanded = "false", id = "dropdownMenuButton1" })
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                @{
+
+                                    foreach (var altitem in ViewBag.altkategoriisimleri)
+                                    {
+                                        string altitemadi = altitem.altkategoriadi;
+
+                                        <li>
+                                            @{
+                                                if (altitem.anakategori_id == item.id)
+                                                {
+
+                                                    @Html.ActionLink(altitemadi, "anasayfa", "genel", new { id = altitem.id }, new { @class = "dropdown-item" })
+                                                }
+                                            }
+                                        </li>
+
+
+                                    }
+
+                                }
+                            </ul>
+                        </div>
+                    }
+                }
+            </ul>
+            <div style="margin-left:5rem;">
+                @using (Html.BeginForm("anasayfa", "genel", FormMethod.Post, new { @class = "d-flex" }))
+                {
+                    <input class="form-control me-2" type="search" placeholder="Arama Kutusu" name="ara" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Ara</button>
+                }
+            </div>
+        </div>
+    </div>
+</nav>
+<div style="margin-bottom:10px;" class="container-fluid text-center" >
+
+
+    @{
+        foreach (var item in ViewBag.kayit)
+        {
+            <div class="card mt-2" style="width:18rem; float:left; margin-left: 2rem;">
+                <img src="~/images/@item.id/@item.resim1" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@item.urunadi</h5>
+                    <p class="card-text">@item.urunfiyat ₺</p>
+
+                    @Html.ActionLink("İncele", "urundetay", "genel", new { id = item.id }, new { @class = "btn btn-primary" })
+
+                    @if (webticaret.Controllers.genelController.yetki == "yetkisiz" && Session["kadiid"] != null)
+                    {
+                        @Html.ActionLink("Sepete Ekle", "sepetekle", "genel", new { id = item.id }, new { @class = "btn btn-primary" })
+                    }
+                    else if (webticaret.Controllers.genelController.yetki == "yetkisiz" && Session["kadiid"] == null)
+                    {
+                        @*<a href="#" class="btn btn-primary">Sepete Ekle</a>*@
+                        @Html.ActionLink("Sepete Ekle", "girisyap", "genel", new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary">Sepete Ekle</a>
+                    }
+                </div>
+            </div>
+        }
+
+    }
+</div>

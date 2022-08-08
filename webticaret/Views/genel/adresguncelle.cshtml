@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "adresguncelle";
+}
+
+<h3 style="color:red;">@ViewBag.mesaj</h3>
+
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-6 mb-3">
+        <h1 class="text-center">Adres Güncelleme Ekranı</h1>
+        @using (Html.BeginForm("adresguncelle", "genel", FormMethod.Post))
+        {
+            foreach (var item in ViewBag.listek)
+            {
+
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Adres</label>
+                    <input type="text" class="form-control" name="adres" value="@item.adres" id="exampleInputEmail1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">İl</label>
+                    <input type="text" class="form-control" name="il" id="exampleInputEmail1"  value="@item.sehir"  required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">İlçe</label>
+                    <input type="text" class="form-control" name="ilce" id="exampleInputEmail1"  value="@item.ilce"  required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Mahalle</label>
+                    <input type="text" class="form-control" name="mahalle" id="exampleInputEmail1"  value="@item.mahalle"  required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Posta Kodu</label>
+                    <input type="text" class="form-control" name="postakodu" id="exampleInputEmail1"  value="@item.postakodu"  required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Tel 1</label>
+                    <input type="text" class="form-control" name="tel1" id="exampleInputEmail1"  value="@item.telno1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Tel 2</label>
+                    <input type="text" class="form-control" name="tel2" id="exampleInputEmail1"  value="@item.telno2" >
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary">Güncelle</button>
+        }
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+

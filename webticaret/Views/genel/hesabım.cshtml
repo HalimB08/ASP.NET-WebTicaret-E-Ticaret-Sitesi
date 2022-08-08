@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "hesabım";
+}
+
+<h2>hesabım</h2>
+
+<div class="card">
+    <div class="card-header">
+        Şifremi Değiştir
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Şifremi Değiştir", "sifredegistir", "genel", new { @class = "btn btn-primary" })
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        Adres İşlemleri
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Adres Ekle", "adresekle", "genel", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Adres Listele / Düzenle", "adresduzenle", "genel", new { @class = "btn btn-primary" })
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+       Hesap Bilgilerimi Değiştir
+    </div>
+    <div class="card-body">
+        @Html.ActionLink("Hesap Bilgilerimi Düzenle", "hesapguncelleme", "genel", new { @class = "btn btn-primary" })
+    </div>
+</div>

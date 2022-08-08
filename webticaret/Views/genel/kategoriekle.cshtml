@@ -1,0 +1,31 @@
+﻿@model webticaret.Models.kategori
+@{
+    ViewBag.Title = "kategoriekle";
+}
+<div class="card mt-3">
+    <div class="card-header">
+        Kategori Ekle
+    </div>
+    <div class="card-body">
+        <h1 style="color:red;">@ViewBag.uyari</h1>
+        @using (Html.BeginForm("kategoriekle", "genel"))
+        {
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Kategori Adı</label>
+                        <input type="text" class="form-control" name="katadi" id="exampleInputEmail1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

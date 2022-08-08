@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "sepet";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Ürün Adı</th>
+            <th scope="col">Ürün Fiyatı</th>
+            <th scope="col">Adeti</th>
+            <th scope="col">Adeti Değiştir</th>
+            <th scope="col">İptal Et</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int sayi = 1;
+            foreach (var item in ViewBag.sepet)
+            {
+                int idal = item.urun_id;
+                webticaret.Models.sqlContext db = new webticaret.Models.sqlContext();
+                var urunismi = (from v in db.urunler
+                                where v.id == idal
+                                select v).ToList();
+                foreach (var initem in urunismi)
+                {
+                    <tr>
+                        <th scope="row">@sayi</th>
+                        <td>@initem.urunadi</td>
+                        <td>@initem.urunfiyat ₺</td>
+                        <td>@item.adet</td>
+                        <td>
+                            @using (Html.BeginForm("sepet", "genel", FormMethod.Post, new { @class = "row g-3" }))
+                            {
+                                <div class="col-auto">
+                                    <input type="number" name="adet_txtbox" class="form-control" id="inputPassword2" value="@item.adet" min="1" max="@initem.adet">
+                                    <input type="hidden" name="sepeturunid_txtbox" class="form-control" value="@item.id">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mb-3">Değiştir</button>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("İptal", "iptal", "genel", new { id = item.id }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+
+
+                sayi++;
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<div class="card mb-3" style="width: 18rem;">
+    <div class="card-header">
+        Satın Alım Kısmı
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Toplam Ücret : @ViewBag.toplamfiyat
+        </li>
+        <li class="list-group-item">
+            @Html.ActionLink("Satın Al", "satinalma", "genel", new { @class = "btn btn-warning" })
+        </li>
+    </ul>
+</div>
+

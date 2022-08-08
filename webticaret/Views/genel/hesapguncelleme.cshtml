@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "hesapguncelleme";
+}
+
+<h3 style="color:red;">@ViewBag.mesaj</h3>
+
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-6">
+        <h1 class="text-center">Hesap Bilgileri Düzenleme</h1>
+        @using (Html.BeginForm("hesapguncelleme", "genel"))
+        {
+            foreach (var item in ViewBag.listekh)
+            {
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Kullanıcı Adınız</label>
+                    <input type="text" class="form-control" name="takmaadi" value="@item.takmaadi"  id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Şifrenizi Giriniz </label>
+                    <input type="password" class="form-control" name="sif" id="exampleInputEmail1">
+                </div>
+            }
+            <button type="submit" class="btn btn-primary">Hesabımı Güncelle</button>
+        }
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+

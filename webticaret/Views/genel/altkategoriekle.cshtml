@@ -1,0 +1,44 @@
+﻿@model List<webticaret.Models.kategori>
+@{
+    ViewBag.Title = "altkategoriekle";
+}
+<div class="card mt-3">
+    <div class="card-header">
+        Alt Kategori Ekle
+    </div>
+    <div class="card-body">
+        <h1 style="color:red;">@ViewBag.uyari</h1>
+        @using (Html.BeginForm("altkategoriekle", "genel"))
+        {
+
+
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col-6">
+
+                    <select class="form-select form-select-lg mb-3" name="akatadid" aria-label=".form-select-lg example">
+                        <option selected>Kategori Seç</option>
+                        @foreach (var item in Model)
+                        {
+                            <option value="@Html.DisplayFor(i => item.id)">@Html.DisplayFor(i => item.kategoriadi)</option>
+                        }
+                        
+                    </select>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Kategori Alt Adı</label>
+                        <input type="text" class="form-control" name="kadi" id="exampleInputEmail1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

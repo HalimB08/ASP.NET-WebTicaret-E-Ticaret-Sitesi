@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "adresekle";
+}
+
+<h2>adresekle</h2>
+<h3 style="color:red;">@ViewBag.umesaj</h3>
+
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-6 mb-3">
+        <h1 class="text-center">Adres Ekleme</h1>
+        @using (Html.BeginForm("adresekle", "genel",FormMethod.Post))
+        {
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Adres</label>
+                <input type="text" class="form-control" name="adres" id="exampleInputEmail1" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">İl</label>
+                <input type="text" class="form-control" name="il" id="exampleInputEmail1"required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">İlçe</label>
+                <input type="text" class="form-control" name="ilce" id="exampleInputEmail1"required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Mahalle</label>
+                <input type="text" class="form-control" name="mahalle" id="exampleInputEmail1"required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Posta Kodu</label>
+                <input type="text" class="form-control" name="postakodu" id="exampleInputEmail1"required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Tel 1</label>
+                <input type="text" class="form-control" name="tel1" id="exampleInputEmail1"required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Tel 2</label>
+                <input type="text" class="form-control" name="tel2" id="exampleInputEmail1">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Adresi Ekle</button>
+        }
+    </div>
+    <div class="col">
+
+    </div>
+</div>

@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "yetkilisiparis";
+}
+
+
+<div class="btn-group mt-3 mb-3" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-primary">Yeni Siparişler</button>
+    <button type="button" class="btn btn-primary">Hazırlanan Siparişler</button>
+    <button type="button" class="btn btn-primary">Hazırlanmış Siparişler</button>
+    <button type="button" class="btn btn-primary">Kargolanmış Siparişler</button>
+    <button type="button" class="btn btn-primary">Teslim Edilmiş Siparişler</button>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Adı</th>
+            <th scope="col">Soyadı</th>
+            <th scope="col">Ürün Adı</th>
+            <th scope="col">Adet</th>
+            <th scope="col">Sipariş Durumu</th>
+            <th scope="col">İptal İsteği</th>
+            <th scope="col">İptal İsteği Yanıtla</th>
+            <th scope="col">Durumu Güncelle</th>
+            <th scope="col">Kargo Bilgisi Gir</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in ViewBag.sip)
+            {
+                int id1 = item.kullanici_id;
+                int id2 = item.urun_id;
+                int id3 = item.id;
+
+                webticaret.Models.sqlContext db = new webticaret.Models.sqlContext();
+                string adial = (from v in db.kullanicilar
+                                where v.id == id1
+                                select v.ad).FirstOrDefault();
+                string soyial = (from v in db.kullanicilar
+                                 where v.id == id1
+                                 select v.soyad).FirstOrDefault();
+                string urunadial = (from v in db.urunler
+                                    where v.id == id2
+                                    select v.urunadi).FirstOrDefault();
+                int urunadedi = (from v in db.siparisler
+                                 where v.id == id3
+                                 select v.adet).FirstOrDefault();
+                bool degeristek = item.siparisiptalistek;
+                string degeristekyazi = "";
+                if (degeristek == true)
+                {
+                    degeristekyazi = "Evet";
+                }
+                else
+                {
+                    degeristekyazi = "Hayır";
+                }
+
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@adial</td>
+                    <td>@soyial</td>
+                    <td>@urunadial</td>
+                    <td>@urunadedi</td>
+                    <td>@item.siparisdurumu</td>
+                    <td>@degeristekyazi</td>
+                    <td>
+                        @using (Html.BeginForm("yetkilisiparisiptali", "genel", FormMethod.Post))
+                        {
+                            <input type="hidden" name="hiddenid" value="@item.id" />
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Siparişi İptal Et
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Siparişi İptal Et</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @urunadial Adlı Siparişi iptal etmek istediğinize emin misiniz?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır, Etmiyorum.</button>
+                                            <button type="submit" class="btn btn-primary">Evet, Ediyorum.</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Sipariş Durumunu Güncelle", "yetkilisiparisdurumguncelle", "genel", new { id = item.id }, new { @class = "btn btn-danger" })
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="kargobilgisi" value="*****" id="exampleInputEmail1">
+                        <button type="submit" class="btn btn-primary">Kayıt ET</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

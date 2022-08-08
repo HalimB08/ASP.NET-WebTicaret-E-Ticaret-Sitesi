@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "sifredegistir";
+}
+
+ <h3 style="color:red;">@ViewBag.mesaj</h3>
+
+<div class="card">
+    <div class="card-header">
+        Şifre Değiştirme
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("sifredegistir", "genel"))
+        {
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Eski Şifre</label>
+                <input type="password" class="form-control" name="eksisif" id="exampleInputEmail1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Yeni Şifre</label>
+                <input type="password" class="form-control" name="sif" id="exampleInputEmail1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Tekrar Yeni Şifre</label>
+                <input type="password" class="form-control" name="siftekrar" id="exampleInputEmail1">
+            </div>
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        }
+    </div>
+</div>
+

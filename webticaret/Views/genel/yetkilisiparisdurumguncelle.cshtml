@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "yetkilisiparisdurumguncelle";
+}
+
+<h2 style="color:red;">@ViewBag.mesaj</h2>
+
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-6">
+
+        @using (Html.BeginForm("yetkilisiparisdurumguncelle", "genel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Ürün Durum</label>
+                <select class="form-select" name="durumselect" aria-label="Default select example" required>
+                    <option selected>Seçiniz</option>
+                    <option value="1">Ürün Hazırlanıyor</option>
+                    <option value="2">Ürün Hazırlandı</option>
+                    <option value="3">Ürün Kargoya Verildi</option>
+                    <option value="4">Ürün Teslim Edildi</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-info">Durumu Güncelle</button>
+
+        }
+
+
+
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+

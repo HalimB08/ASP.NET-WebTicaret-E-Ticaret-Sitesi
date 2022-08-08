@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "urunekle";
+    //treürün ekle sınır 23
+}
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script>
+    $(function () {
+        //aynı ajaxmı kullanıcağımdan dolayı ajaxsetup oluştuyorum
+        $.ajaxSetup({
+            type: "post",
+            url: "/genel/IlIlce",//controlerımda gidicek olan yerim
+            dataType: "json"
+        });
+        $.extend({
+            ilGetir: function () {
+                $.ajax({
+                    //datamızı gönderiyoruz
+                    data: { "tip": "ilGetir" },
+                    success: function (sonuc) {
+                        //gelen sonucumuz kontrol ediyoruz ona göre selectimze append işlemi gerçekleştiyoruz
+                        if (sonuc.ok) {
+
+                            $.each(sonuc.text, function (index, item) {
+                                var optionhtml = '<option value="' + item.Value + '">' + item.Text + '</option>';
+                                $("#il").append(optionhtml);
+
+                            });
+
+                        } else {
+                            $.each(sonuc.text, function (index, item) {
+                                var optionhtml = '<option value="' + item.Value + '">' + item.Text + '</option>';
+                                $("#il").append(optionhtml);
+
+                            });
+
+                        }
+                    }
+                });
+            },
+            ilceGetir: function (ilID) {
+
+                $.ajax({
+                    //ekstra olarak functionumaza gelen ilID mizi gönderiyoruz
+                    data: { "ilID": ilID, "tip": "ilceGetir" },
+                    success: function (sonuc) {
+                        //bir önceki kayıtları temizliyorum
+                        $("#ilce option").remove();
+                        if (sonuc.ok) {
+                            //disabled true yapıyorum
+                            $("#ilce").prop("disabled", false);
+                            $.each(sonuc.text, function (index, item) {
+                                var optionhtml = '<option value="' + item.Value + '">' + item.Text + '</option>';
+                                $("#ilce").append(optionhtml);
+                            });
+
+                        } else {
+                            $.each(sonuc.text, function (index, item) {
+                                var optionhtml = '<option value="' + item.Value + '">' + item.Text + '</option>';
+                                $("#ilce").append(optionhtml);
+
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        //ilgetirimizi çalıştıyoruz
+        $.ilGetir();
+        //il selectimizde değişiklik olduğunda çalışacak func
+        $("#il").on("change", function () {
+            //seçili olan id alıyoruz
+            var ilID = $(this).val();
+            //seçili olan idmizi ilceGetir'imze gönderiyoruz
+            $.ilceGetir(ilID);
+        });
+    });
+</script>
+<h2>urunekle</h2>
+<h1>@ViewBag.mesaj</h1>
+<div class="card mt-3">
+    <div class="card-header">
+        Urun Ekle
+    </div>
+    <div class="card-body">
+        <h1 style="color:red;">@ViewBag.mesaj</h1>
+        @using (Html.BeginForm("urunekle", "genel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col-6">
+
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Ürün Adı</label>
+                        <input type="text" class="form-control" name="uadi" maxlength="23" id="exampleInputEmail1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Ürün Bilgi</label>
+                        <textarea class="form-control" name="ubilgi" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Ürün Fiyatı</label>
+                        <input type="text" class="form-control" name="ufiyat" id="exampleInputEmail1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Kargo Adi</label>
+                        <input type="text" class="form-control" name="ukaradi" id="exampleInputEmail1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Kargo Bilgisi</label>
+                        <input type="text" class="form-control" name="ukarbilgi" id="exampleInputEmail1" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Adet</label>
+                        <input type="number" class="form-control" name="uadet" id="exampleInputEmail1" required>
+                    </div>
+
+
+                    <select class="form-select form-select-lg mb-3" name="iller" id="il" aria-label=".form-select-lg example" required>
+                        <option>Kategori Seç</option>
+                    </select>
+                    <select class="form-select form-select-lg mb-3" name="ilceler" id="ilce" aria-label=".form-select-lg example" disabled>
+                        <option>Alt Kategori Seç</option>
+                    </select>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Resim 1</label>
+                        <input class="form-control" name="resim1" type="file" id="formFile" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Resim 2</label>
+                        <input class="form-control" name="resim2" type="file" id="formFile" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Resim 3</label>
+                        <input class="form-control" name="resim3" type="file" id="formFile" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Ürünü Ekle</button>
+
+
+
+
+
+
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script>
+
+</script>
